@@ -3,6 +3,7 @@ import { Form, Button } from "react-bootstrap";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import auth from "../../../firebase.init";
+import SocialLogin from "../SocialLogin/SocialLogin";
 
 const Login = () => {
 
@@ -10,6 +11,7 @@ const Login = () => {
     const passwordRef = useRef();
     const navigate = useNavigate();
     const location = useLocation();
+    let errorElement;
 
     const from = location.state?.from?.pathname || "/";
 
@@ -19,6 +21,12 @@ const Login = () => {
         loading,
         error,
       ] = useSignInWithEmailAndPassword(auth);
+
+      if (error) {
+        errorElement = <div>
+            <p className='text-danger'>Error: {error?.message}</p>
+          </div>
+      }
 
       if(user){
         navigate(from, {replace: true});
@@ -40,9 +48,6 @@ const Login = () => {
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
           <Form.Control ref={emailRef} type="email" placeholder="Enter email" required />
-          <Form.Text className="text-muted">
-            We'll never share your email with anyone else.
-          </Form.Text>
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -56,7 +61,9 @@ const Login = () => {
           Submit
         </Button>
       </Form>
+      {errorElement}
       <p>New to Car Repairing? <Link to="/register" className="text-danger text-decoration-none">Please Register</Link></p>
+      <SocialLogin></SocialLogin>
     </div>
   );
 };

@@ -1,13 +1,25 @@
 import React from 'react';
+import { useEffect } from 'react';
+import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 
 const ServiceDetail = () => {
 
     const {serviceId} = useParams();
 
+    const [service, setService] = useState({});
+
+    useEffect( () => {
+        const url = `http://localhost:5000/service/${serviceId}`;
+
+        fetch(url)
+        .then(res => res.json())
+        .then(data => setService(data))
+    }, [])
+
     return (
         <div>
-            <h2>This is service Detail: {serviceId}</h2>
+            <h2>You are going to book: {service.name}</h2>
             <div className='text-center'>
                 <Link to="/checkout">
                     <button className='btn btn-primary'>Proceed Checkout</button>

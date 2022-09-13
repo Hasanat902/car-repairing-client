@@ -5,8 +5,9 @@ import { useNavigate, Link, useLocation } from "react-router-dom";
 import auth from "../../../firebase.init";
 import Loading from "../../Shared/Loading/Loading";
 import SocialLogin from "../SocialLogin/SocialLogin";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import PageTitle from "../../Shared/PageTitle/PageTitle";
 
 const Login = () => {
 
@@ -62,6 +63,7 @@ const Login = () => {
 
   return (
     <div className="container w-50 mx-auto">
+      <PageTitle title="Login"></PageTitle>
       <h2 className="text-center text-primary mt-5">Please Login</h2>
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -81,7 +83,6 @@ const Login = () => {
       <p>New to Car Repairing? <Link to="/register" className="text-primary text-decoration-none">Please Register</Link></p>
       <p>Forget Password? <button onClick={resetPassword} className="btn btn-link text-primary text-decoration-none">Reset Password</button></p>
       <SocialLogin></SocialLogin>
-      <ToastContainer></ToastContainer>
     </div>
   );
 };
